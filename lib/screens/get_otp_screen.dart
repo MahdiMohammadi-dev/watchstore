@@ -21,11 +21,17 @@ class GetOtpScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(Assets.png.mainLogo.path),
+              Dimens.medium.sizedBoxHeight,
+              Text(AppStrings.otpCodeSendFor
+                  .replaceAll(AppStrings.replace, "09123324848")),
+              Dimens.small.sizedBoxHeight,
+              Text(AppStrings.wrongNumberEditNumber),
               Dimens.large.sizedBoxHeight,
               AppTextField(
-                label: AppStrings.enterYourNumber,
-                hint: AppStrings.hintPhoneNumber,
+                label: AppStrings.enterVerificationCode,
+                hint: AppStrings.hintVerificationCode,
                 controller: _controller,
+                prefixLabel: "2:15",
               ),
               MainButton(
                 buttonText: AppStrings.next,

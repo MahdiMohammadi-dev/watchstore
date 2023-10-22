@@ -4,12 +4,14 @@ import 'package:watchstore/resouece/dimens.dart';
 
 class AppTextField extends StatelessWidget {
   final String label;
+  final String prefixLabel;
   final String hint;
   final Widget icon;
   TextEditingController controller;
   TextInputType? textInputType;
   AppTextField({
     required this.label,
+    this.prefixLabel = '',
     required this.hint,
     this.icon = const SizedBox(),
     required this.controller,
@@ -24,7 +26,16 @@ class AppTextField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(label),
+          SizedBox(
+            width: size.width * .75,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(prefixLabel),
+                Text(label),
+              ],
+            ),
+          ),
           Dimens.medium.sizedBoxHeight,
           SizedBox(
             height: size.height * .07,
