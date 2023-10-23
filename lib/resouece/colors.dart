@@ -4,6 +4,7 @@ abstract class AppColors {
   static const Color titleColor = Colors.black;
   static const Color hintColor = Color.fromARGB(255, 217, 220, 228);
   static const Color appbarColor = Color.fromARGB(255, 255, 255, 255);
+  static const Color bottomNavColor = Color.fromARGB(255, 255, 255, 255);
   static const Color scaffoldBackgroundColor =
       Color.fromARGB(255, 251, 251, 251);
   static const Color borderColor = Color.fromARGB(255, 217, 220, 228);

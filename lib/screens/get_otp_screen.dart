@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:watchstore/component/text_style.dart';
 import 'package:watchstore/extensions/sized_box_extension.dart';
 import 'package:watchstore/gen/assets.gen.dart';
 import 'package:watchstore/resouece/dimens.dart';
 import 'package:watchstore/resouece/strings.dart';
+import 'package:watchstore/route/screen_name.dart';
 import 'package:watchstore/widgets/app_text_field.dart';
 import 'package:watchstore/widgets/main_button.dart';
 
@@ -22,10 +24,16 @@ class GetOtpScreen extends StatelessWidget {
             children: [
               Image.asset(Assets.png.mainLogo.path),
               Dimens.medium.sizedBoxHeight,
-              Text(AppStrings.otpCodeSendFor
-                  .replaceAll(AppStrings.replace, "09123324848")),
+              Text(
+                AppStrings.otpCodeSendFor
+                    .replaceAll(AppStrings.replace, "09123324848"),
+                style: LightAppTextStyle.title,
+              ),
               Dimens.small.sizedBoxHeight,
-              Text(AppStrings.wrongNumberEditNumber),
+              Text(
+                AppStrings.wrongNumberEditNumber,
+                style: LightAppTextStyle.wrongEditNumber,
+              ),
               Dimens.large.sizedBoxHeight,
               AppTextField(
                 label: AppStrings.enterVerificationCode,
@@ -35,7 +43,9 @@ class GetOtpScreen extends StatelessWidget {
               ),
               MainButton(
                 buttonText: AppStrings.next,
-                onpressed: () {},
+                onpressed: () {
+                  Navigator.pushNamed(context, ScreenName.registerScreen);
+                },
               )
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:watchstore/component/text_style.dart';
 import 'package:watchstore/extensions/sized_box_extension.dart';
 import 'package:watchstore/gen/assets.gen.dart';
 import 'package:watchstore/resouece/dimens.dart';
@@ -17,7 +18,10 @@ class Avatar extends StatelessWidget {
           child: Image.asset(Assets.png.avatar.path),
         ),
         Dimens.medium.sizedBoxHeight,
-        Text(AppStrings.chooseProfileImage),
+        Text(
+          AppStrings.chooseProfileImage,
+          style: LightAppTextStyle.avatarTextStyle,
+        ),
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:watchstore/component/text_style.dart';
 import 'package:watchstore/extensions/sized_box_extension.dart';
 import 'package:watchstore/resouece/dimens.dart';
 
@@ -31,8 +32,14 @@ class AppTextField extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(prefixLabel),
-                Text(label),
+                Text(
+                  prefixLabel,
+                  style: LightAppTextStyle.title,
+                ),
+                Text(
+                  label,
+                  style: LightAppTextStyle.title,
+                ),
               ],
             ),
           ),
@@ -41,12 +48,14 @@ class AppTextField extends StatelessWidget {
             height: size.height * .07,
             width: size.width * .75,
             child: TextField(
+              style: LightAppTextStyle.title,
               textAlign: TextAlign.center,
               controller: controller,
               keyboardType: textInputType,
               decoration: InputDecoration(
                 hintText: hint,
                 prefixIcon: icon,
+                hintStyle: LightAppTextStyle.hint,
               ),
             ),
           )
