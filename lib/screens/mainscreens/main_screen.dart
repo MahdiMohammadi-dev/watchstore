@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:watchstore/gen/assets.gen.dart';
 import 'package:watchstore/resouece/colors.dart';
@@ -7,8 +8,7 @@ import 'package:watchstore/screens/mainscreens/home_screen.dart';
 import 'package:watchstore/screens/mainscreens/profile.dart';
 import 'package:watchstore/widgets/bottom_nav_icon.dart';
 
-class BottomNavIndexItem {
-  BottomNavIndexItem._();
+abstract class BottomNavIndexItem {
   static const homeIndex = 0;
   static const basketIndex = 1;
   static const profileIndex = 2;
@@ -22,6 +22,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  final List<int> _routeHistory = [BottomNavIndexItem.homeIndex];
+
   int indexSelected = BottomNavIndexItem.homeIndex;
   final GlobalKey<NavigatorState> homeScreenKey = GlobalKey();
   final GlobalKey<NavigatorState> basketScreenKey = GlobalKey();
@@ -36,6 +38,12 @@ class _MainScreenState extends State<MainScreen> {
   Future<bool> onWillPop() async {
     if (routingMap[indexSelected]!.currentState!.canPop()) {
       routingMap[indexSelected]!.currentState!.pop();
+    } else if (_routeHistory.length > 1) {
+      setState(() {
+        _routeHistory.removeLast();
+        indexSelected = _routeHistory.last;
+      });
+      print("Remove List is : $_routeHistory");
     }
 
     return false;
@@ -65,11 +73,13 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   ),
                   Navigator(
+                    key: basketScreenKey,
                     onGenerateRoute: (settings) => MaterialPageRoute(
                       builder: (context) => const BasketScreen(),
                     ),
                   ),
                   Navigator(
+                    key: profileScreenKey,
                     onGenerateRoute: (settings) => MaterialPageRoute(
                       builder: (context) => const ProfileScreen(),
                     ),
@@ -120,9 +130,11 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  btmNavPressed({required index}) {
+  btmNavPressed({required int index}) {
     setState(() {
       indexSelected = index;
+      _routeHistory.add(indexSelected);
+      print("ADDDD: $_routeHistory");
     });
   }
 }

@@ -12,7 +12,8 @@ class BtmNavIcons extends StatelessWidget {
   bool isActive;
   void Function() onpressed;
   BtmNavIcons(
-      {required this.svgIconPath,
+      {super.key,
+      required this.svgIconPath,
       required this.iconTitle,
       required this.isActive,
       required this.onpressed});

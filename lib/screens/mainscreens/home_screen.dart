@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:watchstore/component/text_style.dart';
+import 'package:watchstore/gen/assets.gen.dart';
+import 'package:watchstore/resouece/colors.dart';
+import 'package:watchstore/resouece/dimens.dart';
+import 'package:watchstore/resouece/strings.dart';
 import 'package:watchstore/route/screen_name.dart';
 import 'package:watchstore/screens/product_list_screen.dart';
 
@@ -8,15 +14,44 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.purpleAccent,
-      body: Center(
-        child: ElevatedButton(
-            onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ProductListScreen())),
-            child: const Text("مشاهده همه")),
+        body: SafeArea(
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(Dimens.medium),
+              child: Container(
+                height: 52,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: AppColors.appbarColor,
+                    boxShadow: const [
+                      BoxShadow(
+                          color: Color.fromARGB(120, 0, 0, 0),
+                          offset: Offset(0, 3),
+                          blurRadius: 3),
+                    ],
+                    borderRadius: BorderRadius.circular(60)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SvgPicture.asset(Assets.svg.search),
+                    const Text(
+                      AppStrings.searchProduct,
+                      style: LightAppTextStyle.hint,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(Assets.png.mainLogo.path),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
-    );
+    ));
   }
 }
