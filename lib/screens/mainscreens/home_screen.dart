@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:watchstore/component/text_style.dart';
+import 'package:watchstore/extensions/number_sepration.dart';
+import 'package:watchstore/extensions/sized_box_extension.dart';
 import 'package:watchstore/gen/assets.gen.dart';
 import 'package:watchstore/resouece/dimens.dart';
 import 'package:watchstore/resouece/strings.dart';
 import 'package:watchstore/widgets/category_section.dart';
 import 'package:watchstore/widgets/home_screen_slider.dart';
+import 'package:watchstore/widgets/product_item.dart';
 import 'package:watchstore/widgets/search_bar_section.dart';
+import 'package:watchstore/widgets/vertical_text.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -76,9 +80,7 @@ class HomeScreen extends StatelessWidget {
                         ])),
               ],
             ),
-            const SizedBox(
-              height: Dimens.large,
-            ),
+            Dimens.medium.sizedBoxHeight,
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               reverse: true,
@@ -91,15 +93,15 @@ class HomeScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 8,
                     shrinkWrap: true,
-                    itemBuilder: (context, index) => Container(
-                      margin: const EdgeInsets.all(Dimens.medium),
-                      height: 298,
-                      width: 200,
-                      color: Colors.black,
+                    itemBuilder: (context, index) => ProductItem(
+                      productTitle: "ساعت مردانه سیتیزن",
+                      productPrice: "300000",
+                      productImage: Assets.png.unnamed.path,
+                      offPercentage: 30,
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: Dimens.medium,
                 ),
                 const RotatedBox(quarterTurns: -1, child: VerticalText())
@@ -109,34 +111,5 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     ));
-  }
-}
-
-class VerticalText extends StatelessWidget {
-  const VerticalText({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              RotatedBox(
-                  quarterTurns: 1, child: SvgPicture.asset(Assets.svg.back)),
-              Text(
-                AppStrings.viewAll,
-                style: LightAppTextStyle.title,
-              )
-            ],
-          ),
-          const Text(
-            AppStrings.amazing,
-            style: LightAppTextStyle.title,
-          )
-        ],
-      ),
-    );
   }
 }

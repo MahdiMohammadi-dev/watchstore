@@ -34,11 +34,11 @@ class $AssetsSvgGen {
   /// File path: assets/svg/back.svg
   String get back => 'assets/svg/back.svg';
 
-  /// File path: assets/svg/basket.svg
-  String get basket => 'assets/svg/basket.svg';
-
   /// File path: assets/svg/cancelled.svg
   String get cancelled => 'assets/svg/cancelled.svg';
+
+  /// File path: assets/svg/cart.svg
+  String get cart => 'assets/svg/cart.svg';
 
   /// File path: assets/svg/clasic.svg
   String get clasic => 'assets/svg/clasic.svg';
@@ -101,8 +101,8 @@ class $AssetsSvgGen {
   List<String> get values => [
         avatar,
         back,
-        basket,
         cancelled,
+        cart,
         clasic,
         close,
         delete,

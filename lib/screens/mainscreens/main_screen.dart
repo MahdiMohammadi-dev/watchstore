@@ -107,11 +107,13 @@ class _MainScreenState extends State<MainScreen> {
                           btmNavPressed(index: BottomNavIndexItem.profileIndex),
                     ),
                     BtmNavIcons(
-                      svgIconPath: Assets.svg.basket,
+                      svgIconPath: Assets.svg.cart,
                       iconTitle: AppStrings.basket,
-                      isActive: indexSelected == BottomNavIndexItem.basketIndex,
-                      onpressed: () =>
-                          btmNavPressed(index: BottomNavIndexItem.basketIndex),
+                      cartCount:0,
+                      isActive:
+                          indexSelected == BottomNavIndexItem.basketIndex,
+                      onpressed: () => btmNavPressed(
+                          index: BottomNavIndexItem.basketIndex),
                     ),
                     BtmNavIcons(
                       svgIconPath: Assets.svg.home,
