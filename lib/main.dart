@@ -17,6 +17,6 @@ class MyApp extends StatelessWidget {
         // routes: routes,
         theme: lightTheme(),
         debugShowCheckedModeBanner: false,
-        home: const MainScreen());
+        home: const ProductListScreen());
   }
 }
