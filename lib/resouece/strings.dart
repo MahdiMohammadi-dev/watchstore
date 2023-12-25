@@ -14,6 +14,7 @@ abstract class AppStrings {
   static const String nameLastName = "نام و نام خانوادگی";
   static const String homeNumber = "تلفن ثابت";
   static const String address = "آدرس";
+  static const String sendToAddress = "آدرس";
   static const String postalCode = "کد پستی";
   static const String location = "موقعیت مکانی";
   static const String hintNameLastName =

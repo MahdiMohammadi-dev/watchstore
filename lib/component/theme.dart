@@ -4,6 +4,7 @@ import 'package:watchstore/resouece/dimens.dart';
 
 ThemeData lightTheme() {
   return ThemeData(
+    useMaterial3: true,
     brightness: Brightness.light,
     iconTheme: IconThemeData(color: Colors.black),
     primaryColor: AppColors.primaryColor,

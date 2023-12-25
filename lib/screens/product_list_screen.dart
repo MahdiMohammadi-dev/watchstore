@@ -6,6 +6,7 @@ import 'package:watchstore/resouece/colors.dart';
 import 'package:watchstore/resouece/dimens.dart';
 import 'package:watchstore/widgets/cart_badges.dart';
 import 'package:watchstore/widgets/custom_app_bar.dart';
+import 'package:watchstore/widgets/product_item.dart';
 
 class ProductListScreen extends StatelessWidget {
   const ProductListScreen({super.key});
@@ -42,7 +43,10 @@ class ProductListScreen extends StatelessWidget {
           )),
           backgroundColor: Colors.white,
           body: const Column(
-            children: [TagList()],
+            children: [
+              TagList(),
+              ProductGridViewSection(),
+            ],
           )),
     );
   }
@@ -75,6 +79,28 @@ class TagList extends StatelessWidget {
               );
             }),
       ),
+    );
+  }
+}
+
+class ProductGridViewSection extends StatelessWidget {
+  const ProductGridViewSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisSpacing: 2,
+              mainAxisSpacing: 2,
+              childAspectRatio: 0.7,
+              crossAxisCount: 2),
+          itemBuilder: (context, index) {
+            return ProductItem(
+                productTitle: 'ساعت کاسیو',
+                productPrice: '12500',
+                productImage: Assets.png.unnamed.path);
+          }),
     );
   }
 }
