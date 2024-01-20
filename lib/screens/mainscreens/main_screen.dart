@@ -1,11 +1,10 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:watchstore/gen/assets.gen.dart';
 import 'package:watchstore/resouece/colors.dart';
 import 'package:watchstore/resouece/strings.dart';
-import 'package:watchstore/screens/mainscreens/basket_screen.dart';
+import 'package:watchstore/screens/mainscreens/cart_screen.dart';
 import 'package:watchstore/screens/mainscreens/home_screen.dart';
-import 'package:watchstore/screens/mainscreens/profile.dart';
+import 'package:watchstore/screens/mainscreens/profile_screen.dart';
 import 'package:watchstore/widgets/bottom_nav_icon.dart';
 
 abstract class BottomNavIndexItem {
@@ -75,13 +74,15 @@ class _MainScreenState extends State<MainScreen> {
                   Navigator(
                     key: basketScreenKey,
                     onGenerateRoute: (settings) => MaterialPageRoute(
-                      builder: (context) => const BasketScreen(),
+                      builder: (context) => const CartScreen(),
                     ),
                   ),
                   Navigator(
                     key: profileScreenKey,
                     onGenerateRoute: (settings) => MaterialPageRoute(
-                      builder: (context) => const ProfileScreen(),
+                      builder: (context) => Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: const ProfileScreen()),
                     ),
                   ),
                 ],
@@ -109,11 +110,10 @@ class _MainScreenState extends State<MainScreen> {
                     BtmNavIcons(
                       svgIconPath: Assets.svg.cart,
                       iconTitle: AppStrings.basket,
-                      cartCount:0,
-                      isActive:
-                          indexSelected == BottomNavIndexItem.basketIndex,
-                      onpressed: () => btmNavPressed(
-                          index: BottomNavIndexItem.basketIndex),
+                      cartCount: 0,
+                      isActive: indexSelected == BottomNavIndexItem.basketIndex,
+                      onpressed: () =>
+                          btmNavPressed(index: BottomNavIndexItem.basketIndex),
                     ),
                     BtmNavIcons(
                       svgIconPath: Assets.svg.home,

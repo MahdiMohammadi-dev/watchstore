@@ -18,11 +18,14 @@ class $AssetsPngGen {
   /// File path: assets/png/main_logo.png
   AssetGenImage get mainLogo => const AssetGenImage('assets/png/main_logo.png');
 
+  /// File path: assets/png/slider.png
+  AssetGenImage get slider => const AssetGenImage('assets/png/slider.png');
+
   /// File path: assets/png/unnamed.png
   AssetGenImage get unnamed => const AssetGenImage('assets/png/unnamed.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [avatar, mainLogo, unnamed];
+  List<AssetGenImage> get values => [avatar, mainLogo, slider, unnamed];
 }
 
 class $AssetsSvgGen {

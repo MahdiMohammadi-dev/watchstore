@@ -5,7 +5,8 @@ class AppButtonStyle {
   AppButtonStyle._();
 
   static ButtonStyle mainButtonStyle = ButtonStyle(
+      backgroundColor: MaterialStatePropertyAll(Colors.blue),
       shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(Dimens.medium),
-  )));
+        borderRadius: BorderRadius.circular(Dimens.medium),
+      )));
 }
