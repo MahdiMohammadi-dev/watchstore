@@ -7,8 +7,8 @@ import 'package:watchstore/route/screen_name.dart';
 import 'package:watchstore/widgets/app_text_field.dart';
 import 'package:watchstore/widgets/main_button.dart';
 
-class SendOtpScreen extends StatelessWidget {
-  SendOtpScreen({super.key});
+class SendSmsScreen extends StatelessWidget {
+  SendSmsScreen({super.key});
   TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class SendOtpScreen extends StatelessWidget {
               MainButton(
                 buttonText: AppStrings.next,
                 onpressed: () {
-                  Navigator.pushNamed(context, ScreenName.getOtpScreen);
+                  Navigator.pushNamed(context, ScreenName.verifyCodeScreen);
                 },
               )
             ],

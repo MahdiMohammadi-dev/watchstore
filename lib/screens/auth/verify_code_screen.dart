@@ -8,8 +8,8 @@ import 'package:watchstore/route/screen_name.dart';
 import 'package:watchstore/widgets/app_text_field.dart';
 import 'package:watchstore/widgets/main_button.dart';
 
-class GetOtpScreen extends StatelessWidget {
-  GetOtpScreen({super.key});
+class VerifyCodeScreen extends StatelessWidget {
+  VerifyCodeScreen({super.key});
   TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
