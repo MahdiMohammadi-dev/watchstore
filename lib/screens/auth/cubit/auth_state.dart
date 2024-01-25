@@ -7,9 +7,17 @@ final class AuthInitial extends AuthState {}
 
 class AuthLoadingState extends AuthState {}
 
+class AuthVerifyState extends AuthState {
+  final String mobile;
+
+  AuthVerifyState(this.mobile);
+}
+
 class AuthSuccessState extends AuthState {}
 
-class AuthVerifyState extends AuthState {}
+class AuthRegistered extends AuthState {}
+
+class AuthUnRegistered extends AuthState {}
 
 class AuthLoggedInState extends AuthState {}
 

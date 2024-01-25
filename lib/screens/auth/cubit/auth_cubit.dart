@@ -8,11 +8,10 @@ import 'package:watchstore/data/api_links.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final Dio httpClient;
-  AuthCubit(this.httpClient) : super(AuthInitial()) {
-    emit(AuthLoggedOutState());
-  }
+  AuthCubit() : super(AuthInitial());
+  final Dio httpClient = Dio();
 
+  //* TODO: SendSms Method
   sendSms(String mobileNumber) async {
     emit(AuthLoadingState());
     try {
@@ -21,12 +20,13 @@ class AuthCubit extends Cubit<AuthState> {
           message: "شماره تلفن نمیتواند خالی باشد",
         )));
       } else {
-        final response = await httpClient.post(ApisLink.sendSmsApi, data: {
+        final response = await httpClient
+            .post(ApisLink.baseUrl + ApisLink.sendSmsApi, data: {
           "mobile": mobileNumber,
         }).then((value) {
           debugPrint(value.data.toString());
           if (value.statusCode == 201) {
-            emit(AuthVerifyState());
+            emit(AuthVerifyState(mobileNumber));
           } else {
             emit(AuthErrorState(AppException()));
           }
@@ -37,6 +37,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  //! Verify Method
   verifyCode(String mobileNumber, String code) async {
     emit(AuthLoadingState());
     try {
@@ -45,17 +46,47 @@ class AuthCubit extends Cubit<AuthState> {
           message: " کد تایید نمیتواند خالی باشد",
         )));
       } else {
-        final response = await httpClient.post(ApisLink.checkSmsApi, data: {
+        final response = await httpClient
+            .post(ApisLink.baseUrl + ApisLink.checkSmsApi, data: {
           "mobile": mobileNumber,
           "code": code,
         }).then((value) {
           debugPrint(value.data.toString());
           if (value.statusCode == 201) {
-            emit(AuthSuccessState());
+            if (value.data["data"]["is_registered"]) {
+              emit(AuthRegistered());
+            } else {
+              emit(AuthUnRegistered());
+            }
           } else {
             emit(AuthErrorState(AppException()));
           }
         });
+      }
+    } catch (e) {
+      emit(AuthErrorState(AppException()));
+    }
+  }
+
+  registeration(var image, String phone, String name, String address,
+      String postalCode, double lat, double lng) async {
+    emit(AuthLoadingState());
+    final formData = FormData.fromMap({
+      "image": image,
+      "phone": phone,
+      "name": name,
+      "address": address,
+      "postal_code": postalCode,
+      "lat": lat,
+      "lng": lng
+    });
+    try {
+      var resposne = await httpClient
+          .post(ApisLink.baseUrl + ApisLink.registerApi, data: formData);
+      if (resposne.statusCode == 201) {
+        emit(AuthRegistered());
+      } else {
+        emit(AuthUnRegistered());
       }
     } catch (e) {
       emit(AuthErrorState(AppException()));

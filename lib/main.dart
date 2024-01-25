@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(httpClient),
+      create: (context) => AuthCubit(),
       child: MaterialApp(
           // initialRoute: ScreenName.root,
           routes: routes,
