@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:watchstore/component/text_style.dart';
 import 'package:watchstore/extensions/sized_box_extension.dart';
 import 'package:watchstore/gen/assets.gen.dart';
@@ -9,17 +10,31 @@ import 'package:watchstore/resouece/dimens.dart';
 import 'package:watchstore/resouece/strings.dart';
 import 'package:watchstore/route/screen_name.dart';
 import 'package:watchstore/screens/auth/cubit/auth_cubit.dart';
+import 'package:watchstore/utils/image_cropper_picker.dart';
 import 'package:watchstore/widgets/app_text_field.dart';
 import 'package:watchstore/widgets/avatar.dart';
 import 'package:watchstore/widgets/main_button.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController nameLastNameController = TextEditingController();
+
   TextEditingController homeNumberController = TextEditingController();
+
   TextEditingController addressController = TextEditingController();
+
   TextEditingController postalCodeController = TextEditingController();
+
   TextEditingController locationController = TextEditingController();
+
+  ImageCropperPicker imageCropperPicker = ImageCropperPicker();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,7 +73,14 @@ class RegisterScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Dimens.large.sizedBoxHeight,
-                  Avatar(),
+                  Avatar(
+                    onTap: () async {
+                      imageCropperPicker
+                          .pickAndCropImage(source: ImageSource.gallery)
+                          .then((value) => setState(() {}));
+                    },
+                    file: imageCropperPicker.getImage,
+                  ),
 
                   ///TODO:Name & Last Name TextField
                   AppTextField(
