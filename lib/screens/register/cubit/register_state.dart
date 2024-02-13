@@ -16,7 +16,8 @@ class RegsiterError extends RegisterState {
 }
 
 class LocationPickedState extends RegisterState {
-  final GeoPoint? location;
+  final String? location;
+  final GeoPoint? latlng;
 
-  LocationPickedState({required this.location});
+  LocationPickedState(this.latlng, {required this.location});
 }

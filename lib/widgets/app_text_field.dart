@@ -48,7 +48,7 @@ class AppTextField extends StatelessWidget {
             height: size.height * .07,
             width: size.width * .75,
             child: TextField(
-              style: LightAppTextStyle.title,
+              style: LightAppTextStyle.title.copyWith(fontSize: 14),
               textAlign: TextAlign.center,
               controller: controller,
               keyboardType: textInputType,

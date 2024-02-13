@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:watchstore/data/repository/product_repo_test.dart';
 import 'package:watchstore/gen/assets.gen.dart';
 import 'package:watchstore/resouece/colors.dart';
 import 'package:watchstore/resouece/strings.dart';
@@ -22,6 +23,12 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final List<int> _routeHistory = [BottomNavIndexItem.homeIndex];
+
+  @override
+  void initState() {
+    ProductTestRepo().getproduct();
+    super.initState();
+  }
 
   int indexSelected = BottomNavIndexItem.homeIndex;
   final GlobalKey<NavigatorState> homeScreenKey = GlobalKey();

@@ -35,6 +35,7 @@ class AuthCubit extends Cubit<AuthState> {
       }
     } catch (e) {
       emit(AuthErrorState(AppException()));
+      debugPrint('Hello${e.toString()}');
     }
   }
 
