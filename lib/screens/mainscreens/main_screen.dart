@@ -3,8 +3,8 @@ import 'package:watchstore/data/repository/product_repo_test.dart';
 import 'package:watchstore/gen/assets.gen.dart';
 import 'package:watchstore/resouece/colors.dart';
 import 'package:watchstore/resouece/strings.dart';
+import 'package:watchstore/screens/home/home_screen.dart';
 import 'package:watchstore/screens/mainscreens/cart_screen.dart';
-import 'package:watchstore/screens/mainscreens/home_screen.dart';
 import 'package:watchstore/screens/mainscreens/profile_screen.dart';
 import 'package:watchstore/widgets/bottom_nav_icon.dart';
 

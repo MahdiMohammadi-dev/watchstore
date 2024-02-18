@@ -23,7 +23,7 @@ class RemoteProductDataSource implements IProductDataSource {
     var response = await httpClient
         .get(ApisLink.baseUrl + ApisLink.productByBrand + id.toString());
 
-    HttpResponseValidator.isValidateStatusCode(response.statusCode!);
+    HttpResponseValidator.isValidateStatusCode(response.statusCode ?? 0);
     for (var element in response.data['all_products']['data'] as List) {
       productList.add(ProductModel.fromJson(element));
     }
@@ -37,7 +37,7 @@ class RemoteProductDataSource implements IProductDataSource {
     var response = await httpClient
         .get(ApisLink.baseUrl + ApisLink.productByCategory + id.toString());
 
-    HttpResponseValidator.isValidateStatusCode(response.statusCode!);
+    HttpResponseValidator.isValidateStatusCode(response.statusCode ?? 0);
     for (var element in response.data['all_products']['data'] as List) {
       productList.add(ProductModel.fromJson(element));
     }
@@ -51,7 +51,7 @@ class RemoteProductDataSource implements IProductDataSource {
     var response = await httpClient
         .get(ApisLink.baseUrl + ApisLink.versionRoute + routeParameters);
 
-    HttpResponseValidator.isValidateStatusCode(response.statusCode!);
+    HttpResponseValidator.isValidateStatusCode(response.statusCode ?? 0);
     debugPrint(response.data.toString());
     for (var element in response.data['all_products']['data'] as List) {
       productList.add(ProductModel.fromJson(element));
@@ -66,7 +66,7 @@ class RemoteProductDataSource implements IProductDataSource {
     var response = await httpClient
         .get(ApisLink.baseUrl + ApisLink.baseUrl + ApisLink.search + search);
 
-    HttpResponseValidator.isValidateStatusCode(response.statusCode!);
+    HttpResponseValidator.isValidateStatusCode(response.statusCode ?? 0);
     for (var element in response.data['all_products']['data'] as List) {
       productList.add(ProductModel.fromJson(element));
     }

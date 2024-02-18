@@ -37,7 +37,7 @@ class ProductItem extends StatelessWidget {
               ])),
       child: Column(
         children: [
-          Image.asset(productImage),
+          Expanded(child: Image.network(productImage)),
           Padding(
             padding: const EdgeInsets.all(Dimens.medium),
             child: Align(
@@ -56,10 +56,13 @@ class ProductItem extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    productPrice + "تومان",
-                    textDirection: TextDirection.rtl,
-                    style: LightAppTextStyle.title,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      productPrice.toString() + "تومان",
+                      textDirection: TextDirection.rtl,
+                      style: LightAppTextStyle.title,
+                    ),
                   ),
                   Dimens.medium.sizedBoxHeight,
                   Visibility(

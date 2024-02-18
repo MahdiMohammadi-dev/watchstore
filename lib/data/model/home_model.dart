@@ -4,12 +4,12 @@ import 'package:watchstore/data/model/product_model.dart';
 import 'package:watchstore/data/model/slider_model.dart';
 
 class HomeModel {
-  final List<SliderModel> sliders;
-  final List<CategoryModel> categories;
-  final List<ProductModel> amazingProduct;
-  final List<ProductModel> mostSellerProduct;
-  final List<ProductModel> newestProduct;
-  final BannerModel banner;
+  List<SliderModel> sliders;
+  List<CategoryModel> categories;
+  List<ProductModel> amazingProduct;
+  List<ProductModel> mostSellerProduct;
+  List<ProductModel> newestProduct;
+  BannerModel banner;
 
   HomeModel(
       {required this.sliders,

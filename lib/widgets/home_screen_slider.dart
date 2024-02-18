@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:watchstore/data/model/slider_model.dart';
 import 'package:watchstore/resouece/dimens.dart';
 
-final List<String> imagelist = [
-  'https://ticktackgallery.com/media/wysiwyg/campaign-banner/fetr1401/kenneth-cole-final_.jpg',
-  'https://ticktackgallery.com/media/wysiwyg/campaign-banner/fetr1401/polo-final.jpg',
-  'https://ticktackgallery.com/media/wysiwyg/campaign-banner/fetr1401/orient-final.jpg',
-  'https://ticktackgallery.com/media/wysiwyg/campaign-banner/fetr1401/kenneth-cole-final_.jpg',
-  'https://ticktackgallery.com/media/wysiwyg/campaign-banner/fetr1401/seiko-final.jpg',
-  'https://ticktackgallery.com/media/wysiwyg/campaign-banner/fetr1401/romanson_1.jpg',
-];
-
 class HomeScreenSlider extends StatefulWidget {
-  const HomeScreenSlider({super.key, required this.imglist});
+  const HomeScreenSlider({super.key, required this.imgList});
 
-  final List<String> imglist;
+  final List<SliderModel> imgList;
 
   @override
   State<HomeScreenSlider> createState() => _HomeScreenSliderState();
@@ -23,19 +15,7 @@ class HomeScreenSlider extends StatefulWidget {
 
 class _HomeScreenSliderState extends State<HomeScreenSlider> {
   final CarouselController _carouselController = CarouselController();
-  final List<Widget> imagelistitems = imagelist
-      .map(
-        (e) => Padding(
-          padding: const EdgeInsets.all(Dimens.medium),
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(Dimens.medium),
-              child: Image.network(
-                e,
-                fit: BoxFit.fill,
-              )),
-        ),
-      )
-      .toList();
+
   int currentImage = 0;
   @override
   Widget build(BuildContext context) {
@@ -46,7 +26,19 @@ class _HomeScreenSliderState extends State<HomeScreenSlider> {
         children: [
           CarouselSlider(
               carouselController: _carouselController,
-              items: imagelistitems,
+              items: widget.imgList
+                  .map(
+                    (e) => Padding(
+                      padding: const EdgeInsets.all(Dimens.medium),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(Dimens.medium),
+                          child: Image.network(
+                            e.image,
+                            fit: BoxFit.fill,
+                          )),
+                    ),
+                  )
+                  .toList(),
               options: CarouselOptions(
                   pauseAutoPlayOnTouch: true,
                   autoPlay: true,
@@ -59,7 +51,7 @@ class _HomeScreenSliderState extends State<HomeScreenSlider> {
                   scrollPhysics: const BouncingScrollPhysics())),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: imagelist
+            children: widget.imgList
                 .asMap()
                 .entries
                 .map((e) => Padding(
