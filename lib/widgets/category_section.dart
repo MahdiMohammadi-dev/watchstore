@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:watchstore/component/text_style.dart';
-import 'package:watchstore/gen/assets.gen.dart';
 import 'package:watchstore/resouece/dimens.dart';
-import 'package:watchstore/resouece/strings.dart';
 
 class CategorySection extends StatelessWidget {
   const CategorySection({
@@ -12,37 +10,37 @@ class CategorySection extends StatelessWidget {
     required this.titleCategory,
     required this.iconPath,
     required this.gradient,
-    required this.ontap,
+    required this.onTap,
   });
 
   final Size size;
   final String titleCategory;
   final String iconPath;
   final LinearGradient gradient;
-  final ontap;
+  final onTap;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         GestureDetector(
-          onTap: ontap,
+          onTap: onTap,
           child: Container(
-              margin: EdgeInsets.all(Dimens.small),
-              width: size.height * .1,
-              height: size.height * .1,
+              margin: const EdgeInsets.all(Dimens.small),
+              width: size.height * .11,
+              height: size.height * .11,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimens.large),
                   gradient: gradient),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 60, child: SvgPicture.asset(iconPath)),
+                  SizedBox(height: 70, child: Image.network(iconPath)),
                 ],
               )),
         ),
-        SizedBox(
-          height: Dimens.small,
+        const SizedBox(
+          height: Dimens.medium,
         ),
         Text(
           titleCategory,

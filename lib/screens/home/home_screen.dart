@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery.sizeOf(context);
     return BlocProvider(
       create: (context) {
         final homeBloc = HomeBloc(homeRepository);
@@ -43,59 +43,60 @@ class HomeScreen extends StatelessWidget {
                     ),
                     HomeScreenSlider(imgList: state.homeModel.sliders),
 
-                    ///TODO:Category
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CategorySection(
-                            ontap: () {},
-                            size: size,
-                            titleCategory: AppStrings.desktop,
-                            iconPath: Assets.svg.desktop,
-                            gradient: const LinearGradient(
+                    ///TODO:Category Section
+                    SizedBox(
+                      width: size.width,
+                      height: size.height / 5.5,
+                      child: ListView.builder(
+                        padding: const EdgeInsets.only(
+                          left: 15,
+                          right: 15,
+                        ),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: state.homeModel.categories.length,
+                        itemBuilder: (context, index) {
+                          var category = state.homeModel.categories[index];
+                          List<LinearGradient> gradient = [
+                            const LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
-                                colors: [
-                                  Color(0xFF8396E1),
-                                  Color(0xFFE6FCFF)
-                                ])),
-                        CategorySection(
-                            ontap: () {},
-                            size: size,
-                            titleCategory: AppStrings.digital,
-                            iconPath: Assets.svg.digital,
-                            gradient: const LinearGradient(
+                                colors: [Color(0xFF8396E1), Color(0xFFE6FCFF)]),
+                            const LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [
                                   Color(0xFFE183D4),
                                   Color(0xFFFFE6F5),
-                                ])),
-                        CategorySection(
-                            ontap: () {},
-                            size: size,
-                            titleCategory: AppStrings.smart,
-                            iconPath: Assets.svg.smart,
-                            gradient: const LinearGradient(
+                                ]),
+                            const LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [
                                   Color.fromARGB(255, 139, 162, 168),
                                   Color.fromARGB(255, 223, 238, 245),
-                                ])),
-                        CategorySection(
-                            ontap: () {},
-                            size: size,
-                            titleCategory: AppStrings.classic,
-                            iconPath: Assets.svg.clasic,
-                            gradient: const LinearGradient(
+                                ]),
+                            const LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [
                                   Color.fromARGB(255, 255, 166, 114),
                                   Color.fromARGB(255, 255, 227, 200),
-                                ])),
-                      ],
+                                ])
+                          ];
+
+                          LinearGradient selectedGradient =
+                              gradient[index % gradient.length];
+
+                          return CategorySection(
+                              size: size,
+                              titleCategory: category.title,
+                              iconPath: category.image,
+                              gradient: selectedGradient,
+                              onTap: () {
+                                state.homeModel.categories[index].id;
+                              });
+                        },
+                      ),
                     ),
                     Dimens.medium.sizedBoxHeight,
                     SingleChildScrollView(
@@ -152,3 +153,20 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+
+// roomizi
+
+
+//digital
+
+
+
+//hooshmand
+
+
+
+
+//classic
+
+
