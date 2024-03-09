@@ -11,10 +11,10 @@ abstract class IProductDataSource {
   Future<List<ProductModel>>? searchProduct(String search);
 }
 
-class RemoteProductDataSource implements IProductDataSource {
+class ProductRemoteDataSource implements IProductDataSource {
   final Dio httpClient;
 
-  RemoteProductDataSource({required this.httpClient});
+  ProductRemoteDataSource({required this.httpClient});
 
   //* Get All Product By Brand
   @override
@@ -38,7 +38,7 @@ class RemoteProductDataSource implements IProductDataSource {
         .get(ApisLink.baseUrl + ApisLink.productByCategory + id.toString());
 
     HttpResponseValidator.isValidateStatusCode(response.statusCode ?? 0);
-    for (var element in response.data['all_products']['data'] as List) {
+    for (var element in response.data['products_by_category']['data'] as List) {
       productList.add(ProductModel.fromJson(element));
     }
     return productList;

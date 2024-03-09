@@ -6,6 +6,7 @@ import 'package:watchstore/gen/assets.gen.dart';
 import 'package:watchstore/resouece/dimens.dart';
 import 'package:watchstore/resouece/strings.dart';
 import 'package:watchstore/screens/home/bloc/home_bloc.dart';
+import 'package:watchstore/screens/product_list/product_list_screen.dart';
 import 'package:watchstore/widgets/category_section.dart';
 import 'package:watchstore/widgets/home_screen_slider.dart';
 import 'package:watchstore/widgets/product_item.dart';
@@ -93,7 +94,11 @@ class HomeScreen extends StatelessWidget {
                               iconPath: category.image,
                               gradient: selectedGradient,
                               onTap: () {
-                                state.homeModel.categories[index].id;
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => ProductListScreen(
+                                    params: category.id,
+                                  ),
+                                ));
                               });
                         },
                       ),

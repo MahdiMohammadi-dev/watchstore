@@ -4,7 +4,7 @@ import 'package:watchstore/screens/auth/send_sms_screen.dart';
 import 'package:watchstore/screens/auth/verify_code_screen.dart';
 
 import 'package:watchstore/screens/mainscreens/main_screen.dart';
-import 'package:watchstore/screens/product_list_screen.dart';
+import 'package:watchstore/screens/product_list/product_list_screen.dart';
 import 'package:watchstore/screens/product_single_screen.dart';
 import 'package:watchstore/screens/register/register_screen.dart';
 

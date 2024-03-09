@@ -31,17 +31,19 @@ class ProductItem extends StatefulWidget {
 class _ProductItemState extends State<ProductItem> {
   Duration difference = const Duration(seconds: 0);
   late Timer timer;
-  late int inSecond;
+  int inSecond = 0;
   @override
   void initState() {
     super.initState();
+    timer = Timer(difference, () {});
+    if (widget.specialExpiration != "") {
+      DateTime now = DateTime.now();
+      DateTime expiration = DateTime.parse(widget.specialExpiration);
 
-    DateTime now = DateTime.now();
-    DateTime expiration = DateTime.parse(widget.specialExpiration);
-
-    difference = now.difference(expiration).abs();
-    inSecond = difference.inSeconds;
-    startTimer();
+      difference = now.difference(expiration).abs();
+      inSecond = difference.inSeconds;
+      startTimer();
+    }
   }
 
   @override
@@ -147,6 +149,7 @@ class _ProductItemState extends State<ProductItem> {
           inSecond--;
         }
       });
+      timer.cancel();
     });
   }
 }
