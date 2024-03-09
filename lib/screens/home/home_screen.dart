@@ -118,7 +118,8 @@ class HomeScreen extends StatelessWidget {
                                   state.homeModel.amazingProduct[index].price,
                               productImage:
                                   state.homeModel.amazingProduct[index].image,
-                              offClock: 10,
+                              specialExpiration: state.homeModel
+                                  .amazingProduct[index].special_expiration,
                               offPercentage: state
                                   .homeModel.amazingProduct[index].discount,
                             ),
@@ -153,20 +154,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-
-// roomizi
-
-
-//digital
-
-
-
-//hooshmand
-
-
-
-
-//classic
-
-

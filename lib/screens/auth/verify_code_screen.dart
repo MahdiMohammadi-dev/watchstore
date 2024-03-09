@@ -9,6 +9,7 @@ import 'package:watchstore/resouece/dimens.dart';
 import 'package:watchstore/resouece/strings.dart';
 import 'package:watchstore/route/screen_name.dart';
 import 'package:watchstore/screens/auth/cubit/auth_cubit.dart';
+import 'package:watchstore/utils/fomrat_time.dart';
 import 'package:watchstore/widgets/app_text_field.dart';
 import 'package:watchstore/widgets/main_button.dart';
 
@@ -41,14 +42,6 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
         }
       });
     });
-  }
-
-  String formatTime(int sec) {
-    int min = sec ~/ 60;
-    int seconds = sec % 60;
-    String minStr = min.toString().padLeft(2, "0");
-    String SecondsStr = seconds.toString().padLeft(2, "0");
-    return '$minStr:$SecondsStr';
   }
 
   @override
