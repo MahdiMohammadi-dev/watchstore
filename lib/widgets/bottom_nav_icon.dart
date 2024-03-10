@@ -52,21 +52,22 @@ class BtmNavIcons extends StatelessWidget {
               ),
             ),
           ),
-        Visibility(
-          visible: cartCount>0?true:false,
-          child: Positioned(
-            top: 0,
-            right: 0,
-            child: Container(
-              padding:const EdgeInsets.all(6),
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.red
+          Visibility(
+            visible: cartCount > 0 ? true : false,
+            child: Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.all(6),
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.red),
+                child: Text(
+                  cartCount.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
-              child: Text(cartCount.toString(),style: TextStyle(color: Colors.white),),
             ),
-          ),
-        )
+          )
         ],
       ),
     );

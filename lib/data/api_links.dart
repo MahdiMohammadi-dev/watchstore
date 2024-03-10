@@ -13,4 +13,5 @@ class ApisLink {
   static const mostViewedProducts = '/most_viewed_products';
   static const search = '$versionRoute/all_products';
   static const home = '$versionRoute/home';
+  static const productDetails = '$versionRoute/product_details/';
 }
