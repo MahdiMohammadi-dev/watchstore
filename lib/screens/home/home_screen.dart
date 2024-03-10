@@ -127,6 +127,7 @@ class HomeScreen extends StatelessWidget {
                                   .amazingProduct[index].special_expiration,
                               offPercentage: state
                                   .homeModel.amazingProduct[index].discount,
+                              id: state.homeModel.amazingProduct[index].id,
                             ),
                           ),
                         ),
