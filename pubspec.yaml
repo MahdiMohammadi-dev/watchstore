@@ -91,6 +91,10 @@ flutter:
     - family: dana
       fonts:
         - asset: assets/fonts/dana.ttf
+
+    - family: sans
+      fonts:
+        - asset: assets/fonts/sans.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

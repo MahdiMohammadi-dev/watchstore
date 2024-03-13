@@ -12,4 +12,7 @@ class FontFamily {
 
   /// Font family: dana
   static const String dana = 'dana';
+
+  /// Font family: sans
+  static const String sans = 'sans';
 }

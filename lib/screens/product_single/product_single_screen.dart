@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:watchstore/component/text_style.dart';
+import 'package:watchstore/data/model/product_details_model/comment.dart';
+import 'package:watchstore/data/model/product_details_model/product_details_model.dart';
+import 'package:watchstore/data/model/product_details_model/property.dart';
 import 'package:watchstore/data/repository/product_repository.dart';
 import 'package:watchstore/extensions/number_sepration.dart';
 import 'package:watchstore/extensions/sized_box_extension.dart';
@@ -27,9 +30,11 @@ class ProductSingleScreen extends StatelessWidget {
         bloc.add(ProductSingleInit(id: id));
         return bloc;
       },
-      child: BlocConsumer<ProductSingleBloc, ProductSingleState>(
-        listener: (context, state) {},
-        builder: (context, state) {
+      child: SafeArea(
+        child: BlocConsumer<ProductSingleBloc, ProductSingleState>(
+            listener: (context, state) {
+          // TODO: implement listener
+        }, builder: (context, state) {
           if (state is ProductSingleError) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -45,153 +50,161 @@ class ProductSingleScreen extends StatelessWidget {
               ));
             });
           } else if (state is ProductSingleLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
           } else if (state is ProductSingleLoaded) {
-            return SafeArea(
-              child: Scaffold(
-                  appBar: CustomAppBar(
-                      child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        const CartBadge(cartCount: 3),
-                        Expanded(
+            return Scaffold(
+                appBar: CustomAppBar(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      const CartBadge(cartCount: 3),
+                      const SizedBox(
+                        width: Dimens.small,
+                      ),
+                      Expanded(
+                        child: FittedBox(
                           child: Text(
                             state.productDetails.title.toString(),
                             style: LightAppTextStyle.title,
                             textDirection: TextDirection.rtl,
                           ),
                         ),
-                        const SizedBox(
-                          width: Dimens.medium,
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          icon: SvgPicture.asset(Assets.svg.close),
-                        )
-                      ],
-                    ),
-                  )),
-                  backgroundColor: Colors.white,
-                  body: Stack(
-                    children: [
-                      SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Image.network(
-                              state.productDetails.image.toString(),
-                              width: size.width,
-                              fit: BoxFit.cover,
-                            ),
-                            Container(
-                              width: double.infinity,
-                              margin: const EdgeInsets.all(Dimens.medium),
-                              padding: const EdgeInsets.all(Dimens.medium),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.circular(Dimens.medium)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  const Text(
-                                    'بنسر',
-                                    style: LightAppTextStyle.title,
-                                    textDirection: TextDirection.rtl,
-                                  ),
-                                  const Text(
-                                    'خمیر دندان بنسر 3 عددی',
-                                    style: LightAppTextStyle.hint,
-                                    textDirection: TextDirection.rtl,
-                                  ),
-                                  const Divider(),
-                                  const ProductTabView(),
-                                  35.sizedBoxHeight
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
                       ),
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: Container(
-                          height: size.height * 0.11,
-                          color: Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            63500.seperatednumber,
-                                            style: LightAppTextStyle
-                                                .bottomNavActive
-                                                .copyWith(fontSize: 15),
-                                          ),
-                                          const CartBadge(
-                                            cartCount: 20,
-                                            visibility: false,
-                                            percentVisibility: true,
-                                          ),
-                                        ],
-                                      ),
-                                      Text(
-                                        122000.seperatednumber,
-                                        style: LightAppTextStyle.hint
-                                            .copyWith(fontSize: 14),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      padding:
-                                          const EdgeInsets.all(Dimens.small),
-                                      elevation: 0,
-                                      backgroundColor: AppColors.primaryColor,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              Dimens.small))),
-                                  onPressed: () {},
-                                  child: const Text(
-                                    'افزون به سبد خرید',
-                                    style: LightAppTextStyle.buttonText,
-                                    textDirection: TextDirection.rtl,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                      const SizedBox(
+                        width: Dimens.medium,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: SvgPicture.asset(Assets.svg.close),
                       )
                     ],
-                  )),
-            );
+                  ),
+                )),
+                backgroundColor: Colors.white,
+                body: Stack(
+                  children: [
+                    SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Image.network(
+                            state.productDetails.image.toString(),
+                            width: size.width - 100,
+                            fit: BoxFit.cover,
+                          ),
+                          Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.all(Dimens.medium),
+                            padding: const EdgeInsets.all(Dimens.medium),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.medium)),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  state.productDetails.brand.toString(),
+                                  style: LightAppTextStyle.title,
+                                  textDirection: TextDirection.rtl,
+                                ),
+                                Text(
+                                  state.productDetails.title.toString(),
+                                  style: LightAppTextStyle.hint,
+                                  textDirection: TextDirection.rtl,
+                                ),
+                                const Divider(),
+                                ProductTabView(
+                                  productDetailsModel: state.productDetails,
+                                ),
+                                35.sizedBoxHeight
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        height: size.height * 0.11,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          63500.seperatednumber,
+                                          style: LightAppTextStyle
+                                              .bottomNavActive
+                                              .copyWith(fontSize: 15),
+                                        ),
+                                        const CartBadge(
+                                          cartCount: 20,
+                                          visibility: false,
+                                          percentVisibility: true,
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      122000.seperatednumber,
+                                      style: LightAppTextStyle.hint
+                                          .copyWith(fontSize: 14),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.all(Dimens.small),
+                                    elevation: 0,
+                                    backgroundColor: AppColors.primaryColor,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimens.small))),
+                                onPressed: () {},
+                                child: const Text(
+                                  'افزون به سبد خرید',
+                                  style: LightAppTextStyle.buttonText,
+                                  textDirection: TextDirection.rtl,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ));
+          } else {
+            throw Exception('Unknown error');
           }
           return const SizedBox();
-        },
+        }),
       ),
     );
   }
 }
 
 class ProductTabView extends StatefulWidget {
-  const ProductTabView({super.key});
+  final ProductDetailsModel productDetailsModel;
+  const ProductTabView({super.key, required this.productDetailsModel});
 
   @override
   State<ProductTabView> createState() => _ProductTabViewState();
@@ -233,10 +246,16 @@ class _ProductTabViewState extends State<ProductTabView> {
         ),
         IndexedStack(
           index: isSelectedIndex,
-          children: const [
-            Comments(),
-            Features(),
-            Review(),
+          children: [
+            Comments(
+              comments: widget.productDetailsModel.comments!,
+            ),
+            Review(
+              title: widget.productDetailsModel.discussion.toString(),
+            ),
+            PropertyList(
+              propertyList: widget.productDetailsModel.properties!,
+            ),
           ],
         )
       ],
@@ -244,36 +263,87 @@ class _ProductTabViewState extends State<ProductTabView> {
   }
 }
 
-class Features extends StatelessWidget {
-  const Features({super.key});
+class PropertyList extends StatelessWidget {
+  final List<Property> propertyList;
+  PropertyList({super.key, required this.propertyList});
 
   @override
   Widget build(BuildContext context) {
-    return const Text('خصوصیات');
+    return Expanded(
+        child: ListView.builder(
+      itemCount: propertyList.length,
+      physics: const ClampingScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return Container(
+          width: double.infinity,
+          margin: const EdgeInsets.all(Dimens.medium),
+          padding: const EdgeInsets.all(Dimens.medium),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Color.fromARGB(255, 252, 245, 245)),
+          child: Text(
+            "${propertyList[index].property}:${propertyList[index].value!}",
+            textAlign: TextAlign.right,
+            textDirection: TextDirection.rtl,
+            style: TextStyle(fontFamily: FontFamily.dana),
+          ),
+        );
+      },
+    ));
   }
 }
 
 class Comments extends StatelessWidget {
-  const Comments({super.key});
+  final List<Comment> comments;
+
+  const Comments({super.key, required this.comments});
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      """
-  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-
-""",
-      textAlign: TextAlign.right,
-      textDirection: TextDirection.rtl,
-    );
+    return Expanded(
+        child: ListView.builder(
+      itemCount: comments.length,
+      physics: const ClampingScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Color.fromARGB(255, 252, 245, 245)),
+          width: double.infinity,
+          margin: const EdgeInsets.all(Dimens.medium),
+          padding: const EdgeInsets.all(Dimens.medium),
+          child: Text(
+            "${comments[index].user}:${comments[index].body!}",
+            textAlign: TextAlign.right,
+            textDirection: TextDirection.rtl,
+            style: TextStyle(fontFamily: FontFamily.dana),
+          ),
+        );
+      },
+    ));
   }
 }
 
 class Review extends StatelessWidget {
-  const Review({super.key});
+  final String title;
+  const Review({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
-    return const Text('نقد و بررسی');
+    return Padding(
+      padding: const EdgeInsets.only(top: 15),
+      child: Text(
+        title,
+        textAlign: TextAlign.right,
+        textDirection: TextDirection.rtl,
+        maxLines: 10,
+        style: const TextStyle(
+            fontFamily: FontFamily.sans,
+            fontWeight: FontWeight.w400,
+            height: 1.8),
+      ),
+    );
   }
 }
