@@ -14,4 +14,8 @@ class ApisLink {
   static const search = '$versionRoute/all_products';
   static const home = '$versionRoute/home';
   static const productDetails = '$versionRoute/product_details/';
+  static const userCart = '$versionRoute/user_cart';
+  static const addToCart = '$versionRoute/add_to_cart';
+  static const removeFromCart = '$versionRoute/remove_from_cart';
+  static const deleteFromCart = '$versionRoute/delete_from_cart';
 }

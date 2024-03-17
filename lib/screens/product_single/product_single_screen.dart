@@ -281,7 +281,7 @@ class PropertyList extends StatelessWidget {
           padding: const EdgeInsets.all(Dimens.medium),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Color.fromARGB(255, 252, 245, 245)),
+              color: const Color.fromARGB(255, 252, 245, 245)),
           child: Text(
             "${propertyList[index].property}:${propertyList[index].value!}",
             textAlign: TextAlign.right,
