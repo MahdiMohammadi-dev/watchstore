@@ -1,13 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/rendering.dart';
 import 'package:watchstore/data/api_links.dart';
 import 'package:watchstore/data/model/user_cart.dart';
 import 'package:watchstore/utils/response_validator.dart';
 
 abstract class ICartDataSource {
   Future<List<CartModel>> userCart();
-  Future<void> addToCart({required int productId});
+  Future<int> addToCart({required int productId});
   Future<void> removeFromCart({required int productId});
-  Future<void> deleteFromCart({required int productId});
+  Future<int> deleteFromCart({required int productId});
+  Future<int> countCartItemInit();
 }
 
 class CartRemoteDataSource implements ICartDataSource {
@@ -17,20 +19,23 @@ class CartRemoteDataSource implements ICartDataSource {
 
   //* add to cart method
   @override
-  Future<void> addToCart({required int productId}) =>
-      httpClient.post(ApisLink.baseUrl + ApisLink.addToCart, data: {
-        'product_id': productId
-      }).then((value) =>
-          HttpResponseValidator.isValidateStatusCode(value.statusCode ?? 0));
+  Future<int> addToCart({required int productId}) =>
+      httpClient.post(ApisLink.baseUrl + ApisLink.addToCart,
+          data: {'product_id': productId}).then((value) {
+        debugPrint('object==> ${value.data}');
+        HttpResponseValidator.isValidateStatusCode(value.statusCode ?? 0);
+        return (value.data['data']['user_cart'] as List).length;
+      });
 
 //* delete from cart method
 
   @override
-  Future<void> deleteFromCart({required int productId}) =>
-      httpClient.post(ApisLink.baseUrl + ApisLink.deleteFromCart, data: {
-        'product_id': productId
-      }).then((value) =>
-          HttpResponseValidator.isValidateStatusCode(value.statusCode ?? 0));
+  Future<int> deleteFromCart({required int productId}) =>
+      httpClient.post(ApisLink.baseUrl + ApisLink.deleteFromCart,
+          data: {'product_id': productId}).then((value) {
+        HttpResponseValidator.isValidateStatusCode(value.statusCode ?? 0);
+        return (value.data['data']['user_cart'] as List).length;
+      });
 
 //* reomve from cart method
   @override
@@ -50,5 +55,13 @@ class CartRemoteDataSource implements ICartDataSource {
       cartModel.add(CartModel.fromJson(element));
     }
     return cartModel;
+  }
+
+  @override
+  Future<int> countCartItemInit() async {
+    final response =
+        await httpClient.post(ApisLink.baseUrl + ApisLink.userCart);
+    HttpResponseValidator.isValidateStatusCode(response.statusCode ?? 0);
+    return (response.data['data']['user_cart'] as List).length;
   }
 }

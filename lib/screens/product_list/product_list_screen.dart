@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:watchstore/component/text_style.dart';
+import 'package:watchstore/data/repository/cart_repository.dart';
 import 'package:watchstore/data/repository/product_repository.dart';
 import 'package:watchstore/gen/assets.gen.dart';
 import 'package:watchstore/gen/fonts.gen.dart';
@@ -33,9 +34,13 @@ class ProductListScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CartBadge(
-                    cartCount: 6,
-                  ),
+                  ValueListenableBuilder(
+                      valueListenable: cartRepository.cartCount,
+                      builder: (BuildContext context, value, Widget? child) {
+                        return CartBadge(
+                          cartCount: value,
+                        );
+                      }),
                   Row(
                     children: [
                       const Text(

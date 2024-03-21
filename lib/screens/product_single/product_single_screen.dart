@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:watchstore/component/text_style.dart';
 import 'package:watchstore/data/model/product_details_model/comment.dart';
 import 'package:watchstore/data/model/product_details_model/product_details_model.dart';
 import 'package:watchstore/data/model/product_details_model/property.dart';
+import 'package:watchstore/data/repository/cart_repository.dart';
 import 'package:watchstore/data/repository/product_repository.dart';
 import 'package:watchstore/extensions/number_sepration.dart';
 import 'package:watchstore/extensions/sized_box_extension.dart';
@@ -12,6 +14,7 @@ import 'package:watchstore/gen/assets.gen.dart';
 import 'package:watchstore/gen/fonts.gen.dart';
 import 'package:watchstore/resouece/colors.dart';
 import 'package:watchstore/resouece/dimens.dart';
+import 'package:watchstore/screens/cart/bloc/cart_bloc.dart';
 import 'package:watchstore/screens/product_single/bloc/product_single_bloc.dart';
 import 'package:watchstore/widgets/cart_badges.dart';
 import 'package:watchstore/widgets/custom_app_bar.dart';
@@ -24,17 +27,26 @@ class ProductSingleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return BlocProvider(
-      create: (context) {
-        final bloc = ProductSingleBloc(productRepository);
-        bloc.add(ProductSingleInit(id: id));
-        return bloc;
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) {
+            final bloc = ProductSingleBloc(productRepository);
+            bloc.add(ProductSingleInit(id: id));
+            return bloc;
+          },
+        ),
+        BlocProvider(
+          create: (context) {
+            final cartBloc = CartBloc(cartRepository);
+            cartBloc.add(CartCountEvent());
+            return cartBloc;
+          },
+        ),
+      ],
       child: SafeArea(
-        child: BlocConsumer<ProductSingleBloc, ProductSingleState>(
-            listener: (context, state) {
-          // TODO: implement listener
-        }, builder: (context, state) {
+        child: BlocBuilder<ProductSingleBloc, ProductSingleState>(
+            builder: (context, state) {
           if (state is ProductSingleError) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -62,7 +74,14 @@ class ProductSingleScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      const CartBadge(cartCount: 3),
+                      ValueListenableBuilder(
+                          valueListenable: cartRepository.cartCount,
+                          builder:
+                              (BuildContext context, value, Widget? child) {
+                            return CartBadge(
+                              cartCount: value,
+                            );
+                          }),
                       const SizedBox(
                         width: Dimens.small,
                       ),
@@ -170,20 +189,53 @@ class ProductSingleScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.all(Dimens.small),
-                                    elevation: 0,
-                                    backgroundColor: AppColors.primaryColor,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            Dimens.small))),
-                                onPressed: () {},
-                                child: const Text(
-                                  'افزون به سبد خرید',
-                                  style: LightAppTextStyle.buttonText,
-                                  textDirection: TextDirection.rtl,
-                                ),
+                              BlocConsumer<CartBloc, CartState>(
+                                listener: (context, state) {
+                                  if (state is CartItemAddedState) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        backgroundColor: Colors.green,
+                                        content: Text(
+                                          textAlign: TextAlign.right,
+                                          textDirection: TextDirection.rtl,
+                                          'محصول به سبد خرید اضافه شد',
+                                          style: TextStyle(
+                                              fontFamily: FontFamily.sans,
+                                              color: Colors.white,
+                                              fontSize: 17),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                                builder: (cartContext, cartState) {
+                                  if (cartState is CartLoadingState) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                  return ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        padding:
+                                            const EdgeInsets.all(Dimens.small),
+                                        elevation: 0,
+                                        backgroundColor: AppColors.primaryColor,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                Dimens.small))),
+                                    onPressed: () {
+                                      BlocProvider.of<CartBloc>(context).add(
+                                          AddToCartEvent(
+                                              productId:
+                                                  state.productDetails.id!));
+                                    },
+                                    child: const Text(
+                                      'افزون به سبد خرید',
+                                      style: LightAppTextStyle.buttonText,
+                                      textDirection: TextDirection.rtl,
+                                    ),
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -269,8 +321,7 @@ class PropertyList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: ListView.builder(
+    return ListView.builder(
       itemCount: propertyList.length,
       physics: const ClampingScrollPhysics(),
       shrinkWrap: true,
@@ -290,7 +341,7 @@ class PropertyList extends StatelessWidget {
           ),
         );
       },
-    ));
+    );
   }
 }
 
@@ -301,8 +352,7 @@ class Comments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: ListView.builder(
+    return ListView.builder(
       itemCount: comments.length,
       physics: const ClampingScrollPhysics(),
       shrinkWrap: true,
@@ -322,7 +372,7 @@ class Comments extends StatelessWidget {
           ),
         );
       },
-    ));
+    );
   }
 }
 
