@@ -9,7 +9,10 @@ import 'package:watchstore/utils/shared_prefrences_manager.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthInitial());
+  AuthCubit() : super(AuthInitial()) {
+    emit(AuthLoggedInState());
+  }
+
   final Dio httpClient = Dio();
 
   //* TODO: SendSms Method

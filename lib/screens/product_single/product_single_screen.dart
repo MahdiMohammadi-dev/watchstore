@@ -38,9 +38,10 @@ class ProductSingleScreen extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) {
-            final cartBloc = CartBloc(cartRepository);
-            cartBloc.add(CartCountEvent());
-            return cartBloc;
+            final test = CartBloc(cartRepository);
+            test.add(CartInitEvent());
+            test.add(CartCountEvent());
+            return test;
           },
         ),
       ],

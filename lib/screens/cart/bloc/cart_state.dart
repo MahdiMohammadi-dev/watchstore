@@ -23,10 +23,22 @@ class CartSuccessLoaded extends CartState {
   CartSuccessLoaded({required this.cartList});
 }
 
-class CartItemDeleteState extends CartState {}
+class CartItemDeleteState extends CartState {
+  final List<CartModel> cartList;
 
-class CartItemRemovedState extends CartState {}
+  CartItemDeleteState({required this.cartList});
+}
 
-class CartItemAddedState extends CartState {}
+class CartItemRemovedState extends CartState {
+  final List<CartModel> cartList;
+
+  CartItemRemovedState({required this.cartList});
+}
+
+class CartItemAddedState extends CartState {
+  final List<CartModel> cartList;
+
+  CartItemAddedState({required this.cartList});
+}
 
 class CartCountState extends CartState {}

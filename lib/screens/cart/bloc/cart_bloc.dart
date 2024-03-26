@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:watchstore/component/exception.dart';
-import 'package:watchstore/data/model/user_cart.dart';
+import 'package:watchstore/data/model/cart_model.dart';
 import 'package:watchstore/data/repository/cart_repository.dart';
 
 part 'cart_event.dart';
@@ -19,20 +19,23 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           emit(CartSuccessLoaded(cartList: cartList));
         } else if (event is AddToCartEvent) {
           emit(CartLoadingState());
-          var response =
-              await iCartRepository.addToCart(productId: event.productId);
-          emit(CartItemAddedState());
+          var response = await iCartRepository
+              .addToCart(productId: event.productId)
+              .then((value) => emit(CartItemAddedState(cartList: value)));
         } else if (event is RemoveFromCart) {
-          var response =
-              await iCartRepository.removeFromCart(productId: event.productId);
-          emit(CartItemRemovedState());
+          emit(CartLoadingState());
+          var response = await iCartRepository
+              .removeFromCart(productId: event.productId)
+              .then((value) => emit(CartItemRemovedState(cartList: value)));
         } else if (event is deleteFromCart) {
-          var response =
-              await iCartRepository.deleteFromCart(productId: event.productId);
-          emit(CartItemDeleteState());
+          emit(CartLoadingState());
+          var response = await iCartRepository
+              .deleteFromCart(productId: event.productId)
+              .then((value) => emit(CartItemDeleteState(cartList: value)));
         } else if (event is CartCountEvent) {
-          var response = await iCartRepository.countCartItemInit;
-          emit(CartCountState());
+          await iCartRepository
+              .countCartItemInit()
+              .then((value) => emit(CartCountState()));
         }
       } catch (e) {
         debugPrint('EXCEPTION===>${e.toString()}');

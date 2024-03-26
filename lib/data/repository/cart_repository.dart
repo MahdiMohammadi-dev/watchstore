@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:watchstore/data/config/remote_config.dart';
-import 'package:watchstore/data/model/user_cart.dart';
+import 'package:watchstore/data/model/cart_model.dart';
 import 'package:watchstore/data/source/cart_datasource.dart';
 
 final cartRepository = CartRepository(
@@ -8,9 +8,9 @@ final cartRepository = CartRepository(
 
 abstract class ICartRepository {
   Future<List<CartModel>> userCart();
-  Future<int> addToCart({required int productId});
-  Future<void> removeFromCart({required int productId});
-  Future<int> deleteFromCart({required int productId});
+  Future<List<CartModel>> addToCart({required int productId});
+  Future<List<CartModel>> removeFromCart({required int productId});
+  Future<List<CartModel>> deleteFromCart({required int productId});
   Future<int> countCartItemInit();
 }
 
@@ -21,17 +21,21 @@ class CartRepository implements ICartRepository {
 
   CartRepository({required this.iCartDataSource});
   @override
-  Future<int> addToCart({required int productId}) => iCartDataSource
-      .addToCart(productId: productId)
-      .then((value) => cartCount.value = value);
+  Future<List<CartModel>> addToCart({required int productId}) =>
+      iCartDataSource.addToCart(productId: productId).then((value) {
+        cartCount.value = value.length;
+        return value;
+      });
 
   @override
-  Future<int> deleteFromCart({required int productId}) => iCartDataSource
-      .deleteFromCart(productId: productId)
-      .then((value) => cartCount.value = value);
+  Future<List<CartModel>> deleteFromCart({required int productId}) =>
+      iCartDataSource.deleteFromCart(productId: productId).then((value) {
+        cartCount.value = value.length;
+        return value;
+      });
 
   @override
-  Future<void> removeFromCart({required int productId}) =>
+  Future<List<CartModel>> removeFromCart({required int productId}) =>
       iCartDataSource.removeFromCart(productId: productId);
 
   @override
