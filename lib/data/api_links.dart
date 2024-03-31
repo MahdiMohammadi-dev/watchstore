@@ -18,4 +18,6 @@ class ApisLink {
   static const addToCart = '$versionRoute/add_to_cart';
   static const removeFromCart = '$versionRoute/remove_from_cart';
   static const deleteFromCart = '$versionRoute/delete_from_cart';
+  static const profile = '$versionRoute/profile';
+  static const payment = '$versionRoute/payment';
 }

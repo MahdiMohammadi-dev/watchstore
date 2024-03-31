@@ -5,7 +5,7 @@ import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:meta/meta.dart';
 import 'package:watchstore/component/exception.dart';
 import 'package:watchstore/data/api_links.dart';
-import 'package:watchstore/data/model/user_form_auth.dart';
+import 'package:watchstore/data/model/user_model.dart';
 import 'package:watchstore/utils/shared_prefrences_manager.dart';
 
 part 'register_state.dart';
@@ -36,7 +36,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     });
   }
 
-  SendDataToServerFromregister({required UserFormAuth user}) async {
+  SendDataToServerFromregister({required UserModel user}) async {
     emit(RegisterLoading());
     try {
       String? token = SharedPrefrencesManager().getString('token');

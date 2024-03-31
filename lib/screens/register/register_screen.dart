@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:watchstore/component/text_style.dart';
-import 'package:watchstore/data/model/user_form_auth.dart';
+import 'package:watchstore/data/model/user_model.dart';
 import 'package:watchstore/extensions/sized_box_extension.dart';
 import 'package:watchstore/gen/assets.gen.dart';
 import 'package:watchstore/resouece/colors.dart';
@@ -164,7 +164,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             onpressed: () async {
                               BlocProvider.of<RegisterCubit>(context)
                                   .SendDataToServerFromregister(
-                                      user: UserFormAuth(
+                                      user: UserModel(
                                           name: nameLastNameController.text,
                                           phone: homeNumberController.text,
                                           address: addressController.text,

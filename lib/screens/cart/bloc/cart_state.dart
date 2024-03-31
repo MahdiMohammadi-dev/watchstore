@@ -18,27 +18,51 @@ class CartErrorState extends CartState {
 }
 
 class CartSuccessLoaded extends CartState {
-  final List<CartModel> cartList;
+  final UserCartModel userCartModel;
 
-  CartSuccessLoaded({required this.cartList});
+  CartSuccessLoaded({
+    required this.userCartModel,
+  });
+  @override
+  // TODO: implement props
+  List<Object> get props => [userCartModel];
 }
 
 class CartItemDeleteState extends CartState {
-  final List<CartModel> cartList;
+  final UserCartModel userCartModel;
 
-  CartItemDeleteState({required this.cartList});
+  CartItemDeleteState({required this.userCartModel});
+  @override
+  // TODO: implement props
+  List<Object> get props => [userCartModel];
 }
 
 class CartItemRemovedState extends CartState {
-  final List<CartModel> cartList;
+  final UserCartModel userCartModel;
 
-  CartItemRemovedState({required this.cartList});
+  CartItemRemovedState({required this.userCartModel});
+  @override
+  // TODO: implement props
+  List<Object> get props => [userCartModel];
 }
 
 class CartItemAddedState extends CartState {
-  final List<CartModel> cartList;
+  final UserCartModel userCartModel;
 
-  CartItemAddedState({required this.cartList});
+  CartItemAddedState({required this.userCartModel});
+  @override
+  // TODO: implement props
+  List<Object> get props => [userCartModel];
 }
 
 class CartCountState extends CartState {}
+
+class paymentState extends CartState {
+  final String url;
+
+  paymentState({required this.url});
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [url];
+}

@@ -9,10 +9,11 @@ class ProductPaymentDashboard extends StatelessWidget {
     super.key,
     required this.svgIcon,
     required this.title,
+    required this.subtitle,
   });
   final svgIcon;
   final title;
-
+  final String subtitle;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -21,9 +22,15 @@ class ProductPaymentDashboard extends StatelessWidget {
         Dimens.large.sizedBoxHeight,
         Text(
           title,
-          style:
-              LightAppTextStyle.wrongEditNumber.copyWith(color: Colors.black),
-        )
+          style: LightAppTextStyle.wrongEditNumber
+              .copyWith(color: Colors.black, fontSize: 10),
+        ),
+        Dimens.medium.sizedBoxHeight,
+        Text(
+          subtitle,
+          style: LightAppTextStyle.wrongEditNumber
+              .copyWith(color: Colors.black, fontSize: 10),
+        ),
       ],
     );
   }

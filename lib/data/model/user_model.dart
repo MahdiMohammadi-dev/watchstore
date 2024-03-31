@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class UserFormAuth {
+class UserModel {
   final String name;
   final String phone;
   final String address;
@@ -9,7 +9,7 @@ class UserFormAuth {
   final double lat;
   final double lng;
 
-  UserFormAuth({
+  UserModel({
     required this.name,
     required this.phone,
     required this.address,
@@ -31,10 +31,10 @@ class UserFormAuth {
     };
   }
 
-  factory UserFormAuth.fromJson(String? jsonString) {
+  factory UserModel.fromJson(String? jsonString) {
     Map<String, dynamic> map = jsonDecode(jsonString!);
 
-    return UserFormAuth(
+    return UserModel(
         name: map['name'],
         phone: map['phone'],
         address: map['address'],

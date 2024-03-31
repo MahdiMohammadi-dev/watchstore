@@ -1,7 +1,6 @@
 class CartModel {
   int id;
   int productId;
-  bool countLoading;
   bool deleteLoading;
   String product;
   int count;
@@ -16,7 +15,6 @@ class CartModel {
       required this.price,
       required this.discountPrice,
       required this.product,
-      this.countLoading = false,
       this.deleteLoading = false,
       this.cartLoading = false,
       required this.count});

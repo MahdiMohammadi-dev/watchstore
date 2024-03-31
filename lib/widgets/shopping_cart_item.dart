@@ -9,7 +9,7 @@ import 'package:watchstore/screens/cart/bloc/cart_bloc.dart';
 import 'package:watchstore/widgets/surface_container.dart';
 
 class ShoppingCartItem extends StatefulWidget {
-  ShoppingCartItem({
+  const ShoppingCartItem({
     super.key,
     required this.cartModelList,
   });
@@ -21,10 +21,12 @@ class ShoppingCartItem extends StatefulWidget {
 }
 
 class _ShoppingCartItemState extends State<ShoppingCartItem> {
+  late final CartBloc cartBloc;
   @override
   Widget build(BuildContext context) {
     return Expanded(
         child: ListView.builder(
+            padding: const EdgeInsets.only(bottom: 100),
             scrollDirection: Axis.vertical,
             itemCount: widget.cartModelList.length,
             itemBuilder: (context, index) {
@@ -60,7 +62,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                           Row(
                             children: [
                               IconButton(
-                                  onPressed: () => cartBloc.add((AddToCartEvent(
+                                  onPressed: () => cartBloc.add((DeleteFromCart(
                                       productId: widget
                                           .cartModelList[index].productId))),
                                   icon: SvgPicture.asset(Assets.svg.delete)),
@@ -73,14 +75,16 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                             .cartModelList[index].productId));
                                   },
                                   icon: SvgPicture.asset(Assets.svg.minus)),
-                              Text(
-                                '${widget.cartModelList[index].count} عدد',
-                                style: LightAppTextStyle.hint
-                                    .copyWith(color: Colors.grey),
-                                textDirection: TextDirection.rtl,
-                              ),
+                              cartBloc.state is CartLoadingState
+                                  ? const CircularProgressIndicator()
+                                  : Text(
+                                      '${widget.cartModelList[index].count} عدد',
+                                      style: LightAppTextStyle.hint
+                                          .copyWith(color: Colors.grey),
+                                      textDirection: TextDirection.rtl,
+                                    ),
                               IconButton(
-                                  onPressed: () => cartBloc.add(deleteFromCart(
+                                  onPressed: () => cartBloc.add(AddToCartEvent(
                                       productId: widget
                                           .cartModelList[index].productId)),
                                   icon: SvgPicture.asset(Assets.svg.plus))

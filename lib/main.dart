@@ -7,14 +7,13 @@ import 'package:watchstore/route/screen_name.dart';
 import 'package:watchstore/screens/auth/cubit/auth_cubit.dart';
 import 'package:watchstore/screens/auth/send_sms_screen.dart';
 import 'package:watchstore/screens/cart/bloc/cart_bloc.dart';
-import 'package:watchstore/screens/home/home_screen.dart';
 import 'package:watchstore/screens/mainscreens/main_screen.dart';
 import 'package:watchstore/utils/shared_prefrences_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPrefrencesManager().initSharedPrefrences();
-
+  debugPrint('my Token ${SharedPrefrencesManager().getString('token')}');
   runApp(const MyApp());
 }
 

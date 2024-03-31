@@ -23,8 +23,10 @@ class RemoveFromCart extends CartEvent {
   RemoveFromCart({required this.productId});
 }
 
-class deleteFromCart extends CartEvent {
+class DeleteFromCart extends CartEvent {
   final int productId;
 
-  deleteFromCart({required this.productId});
+  DeleteFromCart({required this.productId});
 }
+
+class paymentEvent extends CartEvent {}

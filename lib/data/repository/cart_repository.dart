@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:watchstore/data/config/remote_config.dart';
-import 'package:watchstore/data/model/cart_model.dart';
+import 'package:watchstore/data/model/user_cart_model.dart';
 import 'package:watchstore/data/source/cart_datasource.dart';
 
 final cartRepository = CartRepository(
     iCartDataSource: CartRemoteDataSource(httpClient: DioManager.dio));
 
 abstract class ICartRepository {
-  Future<List<CartModel>> userCart();
-  Future<List<CartModel>> addToCart({required int productId});
-  Future<List<CartModel>> removeFromCart({required int productId});
-  Future<List<CartModel>> deleteFromCart({required int productId});
+  Future<UserCartModel> userCart();
+  Future<UserCartModel> addToCart({required int productId});
+  Future<UserCartModel> removeFromCart({required int productId});
+  Future<UserCartModel> deleteFromCart({required int productId});
   Future<int> countCartItemInit();
+  Future<String> payment();
 }
 
 class CartRepository implements ICartRepository {
@@ -21,28 +22,31 @@ class CartRepository implements ICartRepository {
 
   CartRepository({required this.iCartDataSource});
   @override
-  Future<List<CartModel>> addToCart({required int productId}) =>
+  Future<UserCartModel> addToCart({required int productId}) =>
       iCartDataSource.addToCart(productId: productId).then((value) {
-        cartCount.value = value.length;
+        cartCount.value = value.cartList.length;
         return value;
       });
 
   @override
-  Future<List<CartModel>> deleteFromCart({required int productId}) =>
+  Future<UserCartModel> deleteFromCart({required int productId}) =>
       iCartDataSource.deleteFromCart(productId: productId).then((value) {
-        cartCount.value = value.length;
+        cartCount.value = value.cartList.length;
         return value;
       });
 
   @override
-  Future<List<CartModel>> removeFromCart({required int productId}) =>
+  Future<UserCartModel> removeFromCart({required int productId}) =>
       iCartDataSource.removeFromCart(productId: productId);
 
   @override
-  Future<List<CartModel>> userCart() => iCartDataSource.userCart();
+  Future<UserCartModel> userCart() => iCartDataSource.userCart();
 
   @override
   Future<int> countCartItemInit() => cartRepository
       .countCartItemInit()
       .then((value) => cartCount.value = value);
+
+  @override
+  Future<String> payment() => iCartDataSource.payment();
 }
